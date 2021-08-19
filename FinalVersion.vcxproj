@@ -23,15 +23,20 @@
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Manager.cpp" />
     <ClCompile Include="Person.cpp" />
+    <ClCompile Include="ReadWords.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Date.h" />
+    <ClInclude Include="encryption.h" />
     <ClInclude Include="Gamer.h" />
     <ClInclude Include="Manager.h" />
     <ClInclude Include="Person.h" />
+    <ClInclude Include="ReadWords.h" />
   </ItemGroup>
   <ItemGroup>
     <Text Include="gamers.txt" />
     <Text Include="managers.txt" />
+    <Text Include="sample.txt" />
   </ItemGroup>
   <ItemGroup>
     <None Include="hangman" />
