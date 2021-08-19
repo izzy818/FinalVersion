@@ -20,18 +20,18 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Gamer.cpp" />
+    <ClCompile Include="hangman.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Manager.cpp" />
     <ClCompile Include="Person.cpp" />
-    <ClCompile Include="ReadWords.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Date.h" />
     <ClInclude Include="encryption.h" />
     <ClInclude Include="Gamer.h" />
+    <ClInclude Include="Hangman.h" />
     <ClInclude Include="Manager.h" />
     <ClInclude Include="Person.h" />
-    <ClInclude Include="ReadWords.h" />
   </ItemGroup>
   <ItemGroup>
     <Text Include="gamers.txt" />
