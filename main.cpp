@@ -7,39 +7,39 @@
 #include <map>
 #include <sstream>
 #include <string>
-
 using namespace std;
 
+
 list<Gamer> load_gamers() {
-  ifstream gamers_file;
-  gamers_file.open("gamers.txt");
+    ifstream gamers_file;
+    gamers_file.open("gamers.txt");
 
-  list<Gamer> gamers;
+    list<Gamer> gamers;
 
-  string line;
-  if (gamers_file.is_open()) {
-    while (getline(gamers_file, line)) {
+    string line;
+    if (gamers_file.is_open()) {
+        while (getline(gamers_file, line)) {
 
-      stringstream ss(line);
+            stringstream ss(line);
 
-      int regNo;
-      ss >> regNo;
+            int regNo;
+            ss >> regNo;
 
-      string first;
-      ss >> first;
+            string first;
+            ss >> first;
 
-      string second;
-      ss >> second;
+            string second;
+            ss >> second;
 
-      string full_name = first + " " + second;
+            string full_name = first + " " + second;
 
-      Gamer g = Gamer(full_name, regNo);
-      gamers.push_back(g);
+            Gamer g = Gamer(full_name, regNo);
+            gamers.push_back(g);
+        }
+        gamers_file.close();
     }
-    gamers_file.close();
-  }
 
-  return gamers;
+    return gamers;
 }
 
 list<Manager> load_managers() {
@@ -65,8 +65,8 @@ list<Manager> load_managers() {
 
             string full_name = first + " " + second;
 
-            Manager g = Manager(full_name, regNo);
-            managers.push_back(g);
+            Manager m = Manager(full_name, regNo);
+            managers.push_back(m);
         }
         managers_file.close();
     }
@@ -74,71 +74,93 @@ list<Manager> load_managers() {
     return managers;
 }
 
-/*int gamer() {
+int gamer() {
+  
   // load gamers from file.
   list<Gamer> gamers = load_gamers();
+  do {
+    cout << "Enter your full name:" << endl;
 
-  // temporary to show we've loaded them properly.
-  {
+    string full_name;
+    cin.ignore();
+    getline(cin, full_name);
+
+    // try to find the right gamer
+    Gamer g("", 0);
+
+    int highRegNum;
+
     list<Gamer>::iterator it;
-    for (it = gamers.begin(); it != gamers.end(); it++) {
+    for (it = gamers.begin(); it != gamers.end(); it++)
+    {
       cout << it->getRegNo() << " ... " << it->getName() << endl;
-    }
-  }
-
-  cout << "Enter your full name:" << endl;
-
-  string full_name;
-  cin.ignore();
-  getline(cin, full_name);
-
-  // try to find the right gamer
-  Gamer g("", 0);
-
-  list<Gamer>::iterator it;
-  for (it = gamers.begin(); it != gamers.end(); it++) {
-    cout << it->getRegNo() << " ... " << it->getName() << endl;
-    if (it->getName() == full_name) {
-      g = Gamer(it->getName(), it->getRegNo());
+      if (it->getName() == full_name)
+      {
+        g = Gamer(it->getName(), it->getRegNo());
         cout << "Found ..." << full_name << endl;
+      }
+      if (it->getRegNo() > highRegNum)
+      {
+        highRegNum = it->getRegNo();
+      }
+    }
+
+    //cout << "Highest reg num " << highRegNum << endl;
+    //cout << "got it " << g.getName() << " and reg no " << g.getRegNo() << endl;
+    
+    //if validation fails (regno = 0), create new gamer profile
+    if (g.getRegNo() == 0 )
+    {
+      //set new reg no
+      highRegNum++;
+      Gamer g =  Gamer(full_name, highRegNum);
+      gamers.push_back(g);
+      cout << g.getName() << " you are a new gamer, your reg number is " << g.getRegNo() << endl;
+    }
+
+    // temporary to show we've loaded them properly.
+    {
+      list<Gamer>::iterator it;
+      for (it = gamers.begin(); it != gamers.end(); it++)
+      {
+        cout << it->getRegNo() << " ... " << it->getName() << endl;
+      }
+    }
+
+    cout << "1) Play game" << endl;
+    cout << "2) Your statistics" << endl;
+    cout << "3) Display top 10" << endl;
+    cout << "4) Exit game" << endl;
+
+    char option;
+    cin >> option;
+
+    switch (option)
+    {
+    case '1':
+      // TODO:
+      break;
+    case '2':
+      // TODO:
+      break;
+    case '3':
+      // TODO:
+      break;
+    case '4':
+      // TODO:
+      return -1;
+    default:
+      cout << "Invalid option: " << option << endl;
+      return -1;
     }
   }
-
-  cout << "got it " << g.getName() << " and reg no " << g.getRegNo() << endl;
-  //if validation fails (regno = 0), create new gamer profile
-
-  cout << "1) Play game" << endl;
-  cout << "2) Your statistics" << endl;
-  cout << "3) Display top 10" << endl;
-  cout << "4) Exit game" << endl;
-
-  char option;
-  cin >> option;
-
-  switch (option) {
-  case '1':
-    // TODO:
-    break;
-  case '2':
-    // TODO:
-    break;
-  case '3':
-    // TODO:
-    break;
-  case '4':
-    // TODO:
-    break;
-  default:
-    cout << "Invalid option: " << option << endl;
-    return -1;
-  }
-
+  while (1);
   return 0;
-}*/
+}
 
 //error handling TODO
 
-/*int manager() {
+int manager() {
     //load managers from file
     list<Manager> managers = load_managers();
 
@@ -157,14 +179,14 @@ list<Manager> load_managers() {
     getline(cin, full_name);
 
     // try to find the right manager
-    //Manager m;
+    Manager m("", 0);
 
     list<Manager>::iterator it;
     for (it = managers.begin(); it != managers.end(); it++) {
         cout << it->getRegNo() << " ... " << it->getName() << endl;
         if (it->getName() == full_name) {
-            //m = manager(it->getName(), it->getRegNo());
-            cout << "Found " << full_name << endl;
+            m = Manager(it->getName(), it->getRegNo());
+            cout << "Found ... " << full_name << endl;
         }
     }
 
@@ -199,62 +221,26 @@ list<Manager> load_managers() {
         cout << "Invalid option: " << option << endl;
         return -1;
     }
-    
-    return 0; 
-    }*/
+
+    return 0;
+}
 
 int main() {
-    // load gamers from file.
-    list<Gamer> gamers = load_gamers();
-    //load managers from file
-    list<Manager> managers = load_managers();
 
+    cout << "1) Gamer" << endl;
+    cout << "2) Manager" << endl;
+    cout << "Enter choice:" << endl;
 
-  cout << "Enter your full name: " << endl;
+    char mode;
+    cin >> mode;
 
-  string full_name;
-  //cin.ignore();
-  getline(cin, full_name);
-
-  // try to find a manager
-  Manager m("", 0);
-  //try to find a gamer
-  Gamer g("", 0);
-
-
-
-  list<Manager>::iterator it;
-  for (it = managers.begin(); it != managers.end(); it++) {
-      //cout << it->getRegNo() << " ... " << it->getName() << endl;
-      if (it->getName() == full_name) {
-          m = Manager(it->getName(), it->getRegNo());
-          cout << "Found ... " << full_name << endl;
-      }
-  }
-
-list<Gamer>::iterator it;
-  // try to find the right gamer
-  for (it = gamers.begin(); it != gamers.end(); it++) {
-      //cout << it->getRegNo() << " ... " << it->getName() << endl;
-      if (it->getName() == full_name) {
-          g = Gamer(it->getName(), it->getRegNo());
-          cout << "Found ... " << full_name << endl;
-      }
-  }
-
-  //cout << "Welcome " << g.getName() << ", reg no " << g.getRegNo() << endl;
-  //cout << "Welcome " << full_name << endl;
-
-  /*char mode;
-  cin >> mode;
-
-  switch (mode) {
-  case '1':
-    return gamer();
-  case '2':
-    return manager();
-  default:
-    cout << "Invalid option: " << mode << endl;
-    return -1;
-  }*/
+    switch (mode) {
+    case '1':
+        return gamer();
+    case '2':
+        return manager();
+    default:
+        cout << "Invalid option: " << mode << endl;
+        return -1;
+    }
 }
