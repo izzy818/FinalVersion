@@ -416,7 +416,6 @@ int manager() {
         // TODO:
         break;
     case '5':
-        //TODO
         break;
     default:
         cout << "Invalid option: " << option << endl;
@@ -428,7 +427,7 @@ int manager() {
 
 int main() {
 
-    cout << "   Welcome to Hangman" << endl;
+    cout << "   Welcome to Hangman!" << endl;
     cout << "        ____" << endl;
     cout << "        |  |" << endl;
     cout << "        |  O" << endl;
@@ -436,8 +435,9 @@ int main() {
     cout << "        | / \\" << endl;
     cout << "        |" << endl;
     cout << "        |______" << endl << endl;
-    cout << "1) Gamer" << endl;
-    cout << "2) Manager" << endl;
+    cout << "1) Sign in as Gamer" << endl;
+    cout << "2) Sign in as Manager" << endl;
+    cout << "3) Exit" << endl;
     cout << "Enter choice: ";
 
     char mode;
@@ -448,6 +448,8 @@ int main() {
         return gamer();
     case '2':
         return manager();
+    case '3':
+        return 0;
     default:
         cout << "Invalid option: " << mode << endl;
         return -1;
