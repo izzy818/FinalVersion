@@ -7,7 +7,9 @@ Gamer::Gamer(const string &name, int regNo) : Person(name) {
   this->name = name;
   this->regNo = regNo;
 }
+
 int Gamer::getRegNo() const { return this->regNo; }
+
 void Gamer::addScore(float score, string difficulty) {
   this->scores.insert(pair<string, float>(difficulty, score));
 }

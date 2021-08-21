@@ -338,15 +338,15 @@ int gamer() {
             }
         }
         else if (option == '2') {
-            // TODO:
+            // statistics
             return 0;
         }
         else if (option == '3') {
-            // TODO:
+            // display top 10
             return 0;
         }
         else if (option == '4') {
-            // TODO:
+            cout << "Exiting";
             return 0;
         }
         else {
