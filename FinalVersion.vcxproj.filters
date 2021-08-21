@@ -27,7 +27,7 @@
     <ClCompile Include="Person.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="hangman.cpp">
+    <ClCompile Include="ReadWords.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -47,7 +47,7 @@
     <ClInclude Include="encryption.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Hangman.h">
+    <ClInclude Include="ReadWords.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

@@ -69,7 +69,7 @@ using namespace std;
      string nextword;
      bool eoffound;
      string words[10];
-     string phrases[50]
+     string phrases[50];
  };
 
  #endif
