@@ -34,6 +34,7 @@
     <ClInclude Include="ReadWords.h" />
   </ItemGroup>
   <ItemGroup>
+    <Text Include="diff.txt" />
     <Text Include="gamers.txt" />
     <Text Include="managers.txt" />
     <Text Include="sample.txt" />

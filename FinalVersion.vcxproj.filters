@@ -55,6 +55,7 @@
     <Text Include="gamers.txt" />
     <Text Include="managers.txt" />
     <Text Include="sample.txt" />
+    <Text Include="diff.txt" />
   </ItemGroup>
   <ItemGroup>
     <None Include="hangman" />

@@ -9,6 +9,7 @@
 #include <map>
 #include <sstream>
 #include <string>
+#include <limits>
 using namespace std;
 
 
@@ -141,6 +142,35 @@ int gamer() {
         cin >> option;
 
         if (option == '1') {
+            //select difficulty
+            //read from difficulty.txt
+            ifstream difficulty;
+            difficulty.open("diff.txt");
+            
+            cout << "Please select a difficulty: " << endl;
+            cout << "1) Easy" << endl;
+            cout << "2) Medium" << endl;
+            cout << "3) Hard" << endl;
+
+            string difficulty;
+            char diffMode;
+            cin >> diffMode;
+
+            if (diffMode = '1') {
+                string difficulty = "Easy";
+                //pull word length from file & store in wordLen ?
+            }
+            else if (diffMode = '2') {
+                string difficulty = "Medium";
+            }
+            else if (diffMode = '3') {
+                string difficulty = "Hard";
+            }
+            else {
+                cout << "Invalid option: " << diffMode;
+                return 0;
+            }
+
             //set variables for game
             int guesses{ 6 }; //allowed guesses
             char guess;
@@ -390,8 +420,6 @@ int manager() {
             cout << "Found ... " << full_name << endl;
         }
     }
-
-    //if validation fails, return to login?
 
     cout << "1) Reset game" << endl;
     cout << "2) Change game levels" << endl;

@@ -93,9 +93,6 @@ bool ReadWords::getWords()
 
 	return true;
 }
-//void ReadWords::getWords()
-//{ // you must write this
-//}
 
 void ReadWords::close()
 { // you must write this
