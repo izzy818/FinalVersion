@@ -7,9 +7,9 @@ using namespace std;
 
 class Person
 {   public:
-        Person(const string &name);
-	   string getName() const;
-	   void changeName(const string &newName);
+    	Person(const string &name);
+		string getName() const;
+		void changeName(const string &newName);
     protected:
 	   string name;
 };

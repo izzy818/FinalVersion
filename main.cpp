@@ -78,81 +78,83 @@ int gamer() {
   
   // load gamers from file.
   list<Gamer> gamers = load_gamers();
-  do {
-    cout << "Enter your full name:" << endl;
+  cout << "Enter your full name:" << endl;
 
-    string full_name;
-    cin.ignore();
-    getline(cin, full_name);
+  string full_name;
+  cin.ignore();
+  getline(cin, full_name);
 
-    // try to find the right gamer
-    Gamer g("", 0);
+  // try to find the right gamer
+  Gamer g("", 0);
 
-    int highRegNum;
+  int highRegNum (0);
 
+  list<Gamer>::iterator it;
+  for (it = gamers.begin(); it != gamers.end(); it++)
+  {
+    cout << it->getRegNo() << " ... " << it->getName() << endl;
+    if (it->getName() == full_name)
+    {
+      g = Gamer(it->getName(), it->getRegNo());
+      // temporary output to confiem found
+      cout << "Found ..." << full_name << endl;
+    }
+    if (it->getRegNo() > highRegNum)
+    {
+      highRegNum = it->getRegNo();
+    }
+  }
+
+  //cout << "Highest reg num " << highRegNum << endl;
+  //cout << "got it " << g.getName() << " and reg no " << g.getRegNo() << endl;
+  
+  //if validation fails (regno = 0), create new gamer profile
+  if (g.getRegNo() == 0 )
+  {
+    //set new reg no
+    highRegNum++;
+    Gamer g =  Gamer(full_name, highRegNum);
+    gamers.push_back(g);
+    cout << g.getName() << " you are a new gamer, your reg number is " << g.getRegNo() << endl;
+  }
+
+  // temporary to show we've loaded them properly.
+  {
     list<Gamer>::iterator it;
     for (it = gamers.begin(); it != gamers.end(); it++)
     {
       cout << it->getRegNo() << " ... " << it->getName() << endl;
-      if (it->getName() == full_name)
+    }
+  }
+
+  do 
+  {
+      cout << "1) Play game" << endl;
+      cout << "2) Your statistics" << endl;
+      cout << "3) Display top 10" << endl;
+      cout << "4) Exit game" << endl;
+
+      char option;
+      cin >> option;
+
+      switch (option)
       {
-        g = Gamer(it->getName(), it->getRegNo());
-        cout << "Found ..." << full_name << endl;
+      case '1':
+        // TODO:
+        break;
+      case '2':
+        // TODO:
+        break;
+      case '3':
+        // TODO:
+        break;
+      case '4':
+        // TODO:
+        return -1;
+      default:
+        cout << "Invalid option: " << option << endl;
+        return -1;
       }
-      if (it->getRegNo() > highRegNum)
-      {
-        highRegNum = it->getRegNo();
-      }
-    }
-
-    //cout << "Highest reg num " << highRegNum << endl;
-    //cout << "got it " << g.getName() << " and reg no " << g.getRegNo() << endl;
-    
-    //if validation fails (regno = 0), create new gamer profile
-    if (g.getRegNo() == 0 )
-    {
-      //set new reg no
-      highRegNum++;
-      Gamer g =  Gamer(full_name, highRegNum);
-      gamers.push_back(g);
-      cout << g.getName() << " you are a new gamer, your reg number is " << g.getRegNo() << endl;
-    }
-
-    // temporary to show we've loaded them properly.
-    {
-      list<Gamer>::iterator it;
-      for (it = gamers.begin(); it != gamers.end(); it++)
-      {
-        cout << it->getRegNo() << " ... " << it->getName() << endl;
-      }
-    }
-
-    cout << "1) Play game" << endl;
-    cout << "2) Your statistics" << endl;
-    cout << "3) Display top 10" << endl;
-    cout << "4) Exit game" << endl;
-
-    char option;
-    cin >> option;
-
-    switch (option)
-    {
-    case '1':
-      // TODO:
-      break;
-    case '2':
-      // TODO:
-      break;
-    case '3':
-      // TODO:
-      break;
-    case '4':
-      // TODO:
-      return -1;
-    default:
-      cout << "Invalid option: " << option << endl;
-      return -1;
-    }
   }
   while (1);
   return 0;
@@ -160,11 +162,38 @@ int gamer() {
 
 //error handling TODO
 
+int addManager(int newRegNum, list<Manager> managers) {
+  cout << "Adding manager (first name and last name):" << endl;
+  string newManager;
+  cin.ignore();
+  getline(cin, newManager);
+  
+  //cout << "highest reg number:" << newRegNum << endl;
+  string newReg(4,'0');
+  newRegNum++;
+  newReg = newReg + to_string(newRegNum);
+  newReg = newReg.substr(newReg.size() - 4);
+  cout << "formatted new reg: " << newReg << endl;
+
+  Manager nm = Manager(newManager, newRegNum);
+  managers.push_back(nm);
+  cout << nm.getName() << " you are a new manager, your reg number is " << nm.getRegNo() << endl;
+  ofstream managers_file;
+  managers_file.open("managers.txt", ios::app);
+  if (managers_file.is_open()){
+    managers_file << endl << newReg << " " << newManager << endl;
+    cout << "New manager saved to file" << endl;
+    managers_file.close();
+  }
+  else cout << "New manager not saved!";
+  return 0;
+}
+
 int manager() {
     //load managers from file
     list<Manager> managers = load_managers();
 
-    //show they loaded
+    // temporary output to show they loaded 
     {
         list<Manager>::iterator it;
         for (it = managers.begin(); it != managers.end(); it++) {
@@ -181,43 +210,59 @@ int manager() {
     // try to find the right manager
     Manager m("", 0);
 
+    int highRegNum (0);
+
     list<Manager>::iterator it;
-    for (it = managers.begin(); it != managers.end(); it++) {
-        cout << it->getRegNo() << " ... " << it->getName() << endl;
-        if (it->getName() == full_name) {
-            m = Manager(it->getName(), it->getRegNo());
-            cout << "Found ... " << full_name << endl;
-        }
+    for (it = managers.begin(); it != managers.end(); it++) 
+    {
+      cout << it->getRegNo() << " ... " << it->getName() << endl;
+      if (it->getName() == full_name) 
+      {
+          m = Manager(it->getName(), it->getRegNo());
+          cout << "Found ... " << full_name << endl;
+      }
+      if (it->getRegNo() > highRegNum)
+      {
+        highRegNum = it->getRegNo();
+      }
     }
 
     //if validation fails, return to login?
+    if (m.getRegNo() == 0)
+    { 
+      cout << "No matching manager name" << endl;
+      //pause;
+      cin.ignore();
+      return 0;
+    }
 
     cout << "1) Reset game" << endl;
     cout << "2) Change game levels" << endl;
     cout << "3) Add another manager" << endl;
     cout << "4) Set the word file" << endl;
-    cout << "5) Exit game" << endl;
+    cout << "5) Return to main options" << endl;
 
     char option;
     cin >> option;
 
     switch (option) {
-    case '1':
-        // TODO:
+      case '1':
+        // TODO: reset the to default difficulty values
         break;
-    case '2':
-        // TODO:
+      case '2':
+        // TODO: set new difficulty values
         break;
-    case '3':
-        // TODO:
+      case '3':
+        // TODO: Add name to list and increment reg no by 1
+        addManager (highRegNum, managers);
         break;
-    case '4':
-        // TODO:
-        break;
-    case '5':
-        //TODO
-        break;
-    default:
+      case '4':
+        // TODO: select the word file for the game play
+          break;
+      case '5':
+        //TODO return to main menu
+        return 0; 
+      default:
         cout << "Invalid option: " << option << endl;
         return -1;
     }
@@ -226,21 +271,24 @@ int manager() {
 }
 
 int main() {
+  cout << "1) Gamer" << endl;
+  cout << "2) Manager" << endl;
+  cout << "3) Exit Game" << endl;
+  cout << "Enter choice:" << endl;
 
-    cout << "1) Gamer" << endl;
-    cout << "2) Manager" << endl;
-    cout << "Enter choice:" << endl;
+  char mode;
+  cin >> mode;
 
-    char mode;
-    cin >> mode;
-
-    switch (mode) {
+  switch (mode) {
     case '1':
-        return gamer();
+      return gamer();
     case '2':
-        return manager();
+      manager();
+      main();
+    case '3':
+      return 1;
     default:
-        cout << "Invalid option: " << mode << endl;
-        return -1;
-    }
+      cout << "Invalid main option: " << mode << endl;
+      return -1;
+  }
 }

@@ -15,6 +15,6 @@ void Gamer::addScore(float score, string difficulty) {
 bool Gamer::updateAccumulativeScore(string difficulty, float score)
 {
   this->accumulative_scores[difficulty] += score;
-  //need to add error handling to capture failure/errors and return false
-  return true;
+  // need to add error handling to capture failure and return false
+  return true; 
 }

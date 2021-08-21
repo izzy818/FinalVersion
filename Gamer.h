@@ -29,7 +29,6 @@ class Gamer: public Person
 	   // should throw NoScoreException if gamer has no score yet
 	   // it should display the score based on the levels of difficulty the gamer player
 	   bool updateAccumulativeScore(string difficulty,float score); //there was a Const here
-	   //const removed as couldn't get to compile in main
 
     private:
 	   int regNo;

@@ -10,6 +10,7 @@ using namespace std;
 #include <cctype>
 #include <cstdlib>
 #include <iostream>
+#include <set>
 
 string removePunct(string word)
 { // should return a copy of the word with all leading and trailing punctuation      
@@ -58,39 +59,43 @@ bool ReadWords::isNextWord()
 { return !eoffound;
 }
 
-void ReadWords::getPhrases()
+bool ReadWords::getPhrases()
 { // you must write this
+return 0;
 }
+
+//void ReadWords::getWords()
+//{ // you must write this
+//}
+
 bool ReadWords::getWords()
 {
-	// Populate a set of all words
-	set<string> allwords;
-	while (isNextWord()) {
-		string word = getNextWord();
-		if (word != "") {
-			allwords.insert(word);
-		}
-	}
+  // Populate a set of all words
+  set<string> allwords;
+  while (isNextWord())
+  {
+    string word = getNextWord();
+    if (word != "")
+    {
+      allwords.insert(word);
+    }
+  }
 
+  // select 10 words randomly
+  for (int i = 0; i < 10; i++)
+  {
+    int randNum = rand() % allwords.size();
+    auto it = std::begin(allwords);
+    std::advance(it, randNum);
+    words[i] = *it;
+  }
 
-	// select 10 words randomly
-	for (int i=0; i<10; i++) {
-		int randNum = rand() % allwords.size();
-		auto it = std::begin(allwords);
-		std::advance(it,randNum);
-		words[i] = *it;
-	}
+  // reset file position
+  wordfile.seekg(0, wordfile.beg);
 
-	// reset file position
-	wordfile.seekg(0, wordfile.beg);
-
-	return true;
-}
-void ReadWords::getWords()
-{ // you must write this
+  return true;
 }
 
 void ReadWords::close()
 { // you must write this
 }
-
