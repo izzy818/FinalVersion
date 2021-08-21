@@ -181,7 +181,7 @@ int addManager(int newRegNum, list<Manager> managers) {
   ofstream managers_file;
   managers_file.open("managers.txt", ios::app);
   if (managers_file.is_open()){
-    managers_file << endl << newReg << " " << newManager << endl;
+    managers_file << endl << newReg << " " << newManager;
     cout << "New manager saved to file" << endl;
     managers_file.close();
   }
