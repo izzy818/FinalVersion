@@ -7,7 +7,7 @@ using namespace std;
 
 class Person
 {   public:
-        Person(const string &name);
+       Person(const string &name);
 	   string getName() const;
 	   void changeName(const string &newName);
     protected:

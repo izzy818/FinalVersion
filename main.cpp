@@ -120,7 +120,7 @@ int gamer() {
             cout << g.getName() << " you are a new gamer, your reg. no is: " << g.getRegNo() << endl;
         }
 
-        // temporary to show we've loaded them properly.
+        // temporary to show they loaded them properly.
         /* {
             list<Gamer>::iterator it;
             for (it = gamers.begin(); it != gamers.end(); it++)
@@ -128,7 +128,6 @@ int gamer() {
                 cout << it->getRegNo() << " ... " << it->getName() << endl;
             }
         }*/
-
 
         cout << "Welcome " << g.getName() << ", reg. no: " << g.getRegNo() << endl;
         //if validation fails (regno = 0), create new gamer profile
@@ -142,6 +141,17 @@ int gamer() {
         cin >> option;
 
         if (option == '1') {
+
+            //set variables for game
+            int guesses{ 6 }; //allowed guesses
+            char guess;
+            bool correctGuess = false;
+            string word; //word to guess
+            string wordList[99];
+            string wordListE[99]; 
+            string wordListM[99];
+            string wordListH[99];
+            char guessed[7]; //array of guesses
             //select difficulty
             //read from difficulty.txt
             ifstream difficulty;
@@ -152,11 +162,10 @@ int gamer() {
             cout << "2) Medium" << endl;
             cout << "3) Hard" << endl;
 
-            string difficulty;
             char diffMode;
             cin >> diffMode;
 
-            if (diffMode = '1') {
+            /*if (diffMode = '1') {
                 string difficulty = "Easy";
                 //pull word length from file & store in wordLen ?
             }
@@ -169,15 +178,7 @@ int gamer() {
             else {
                 cout << "Invalid option: " << diffMode;
                 return 0;
-            }
-
-            //set variables for game
-            int guesses{ 6 }; //allowed guesses
-            char guess;
-            bool correctGuess = false;
-            string word; //word to guess
-            string wordList[99]; //an array of 100 strings
-            char guessed[7]; //array of guesses
+            }*/
 
             guessed[0] = '\0';
             for (int i = 1; i < 6; i++)
@@ -199,6 +200,21 @@ int gamer() {
             }
             int randNum = rand() % 100; //returns random value between 0-99
             word = wordList[randNum];
+
+            /*if (diffMode == '1') {
+                word = wordListE[randNum];
+            }
+            else if (diffMode == '2') {
+                word = wordListM[randNum];
+            }
+            else if (diffMode == '3') {
+                word = wordListH[randNum];
+            }
+            else {
+                cout << "Invalid option: " << diffMode;
+                return 0;
+            }*/
+           
             //cout << word << endl; //for testing the random word
             randWord.close();
 
@@ -391,6 +407,74 @@ int gamer() {
 
 //error handling TODO
 
+int addManager(int newRegNum, list<Manager> managers) {
+    cout << "Adding manager (first name and last name):" << endl;
+    string newManager;
+    cin.ignore();
+    getline(cin, newManager);
+
+    //cout << "highest reg number:" << newRegNum << endl;
+    string newReg(4, '0');
+    newRegNum++;
+    newReg = newReg + to_string(newRegNum);
+    newReg = newReg.substr(newReg.size() - 4);
+    cout << "formatted new reg: " << newReg << endl;
+
+    Manager nm = Manager(newManager, newRegNum);
+    managers.push_back(nm);
+    cout << nm.getName() << " you are a new manager, your reg number is " << nm.getRegNo() << endl;
+    ofstream managers_file;
+    managers_file.open("managers.txt", ios::app);
+    if (managers_file.is_open()) {
+        managers_file << endl << newReg << " " << newManager;
+        cout << "New manager saved to file" << endl;
+        managers_file.close();
+    }
+    else cout << "New manager not saved!";
+    return 0;
+}
+
+int changeLevels() {
+    ofstream diffFile("diff.txt");
+
+    string eMode, mMode, hMode;
+    cout << "Enter the upper and lower character limits for easy mode: " << endl;
+    getline(cin, eMode);
+    cout << "Enter the upper and lower character limits for medium mode: " << endl;
+    getline(cin, mMode);
+    cout << "Enter the lower character limit for hard mode: " << endl;
+    getline(cin, hMode);
+
+    diffFile << eMode << endl;
+    diffFile << mMode << endl;
+    diffFile << hMode;
+
+    diffFile.close();
+
+    /*cout << "Which difficulty would you like to change?" << endl;
+    cout << "1) Easy mode" << endl;
+    cout << "2) Medium mode" << endl;
+    cout << "3) Hard mode" << endl;
+
+    char mode;
+    cin >> mode;
+
+    switch (mode) {
+    case '1':
+        //TODO
+        
+    case '2':
+        //TODO
+        
+    case '3':
+        //TODO
+        
+    default:
+        cout << "Invalid option" << mode << endl;
+        return -1;
+    }*/
+}
+
 int manager() {
     //load managers from file
     list<Manager> managers = load_managers();
@@ -412,13 +496,30 @@ int manager() {
     // try to find the right manager
     Manager m("", 0);
 
+    int highRegNum(0);
+
     list<Manager>::iterator it;
-    for (it = managers.begin(); it != managers.end(); it++) {
+    for (it = managers.begin(); it != managers.end(); it++)
+    {
         cout << it->getRegNo() << " ... " << it->getName() << endl;
-        if (it->getName() == full_name) {
+        if (it->getName() == full_name)
+        {
             m = Manager(it->getName(), it->getRegNo());
             cout << "Found ... " << full_name << endl;
         }
+        if (it->getRegNo() > highRegNum)
+        {
+            highRegNum = it->getRegNo();
+        }
+    }
+
+    //if validation fails, return to login?
+    if (m.getRegNo() == 0)
+    {
+        cout << "No matching manager name" << endl;
+        //pause;
+        cin.ignore();
+        return 0;
     }
 
     cout << "1) Reset game" << endl;
@@ -435,10 +536,10 @@ int manager() {
         // TODO:
         break;
     case '2':
-        // TODO:
+        changeLevels();
         break;
     case '3':
-        // TODO:
+        addManager(highRegNum, managers);
         break;
     case '4':
         // TODO:
