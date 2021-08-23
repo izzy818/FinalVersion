@@ -68,7 +68,7 @@ return 0;
 //{ // you must write this
 //}
 
-bool ReadWords::getWords()
+bool ReadWords::getWords()  //declare as bool in readwords.h
 {
   // Populate a set of all words
   set<string> allwords;

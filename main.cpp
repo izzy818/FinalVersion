@@ -79,9 +79,9 @@ list<Manager> load_managers() {
 }
 
 int playgame() {
-  ReadWords("sample.txt");
+  ReadWords maingame("sample.txt");
 
- 
+  maingame.close();
 }
 
 int gamer() {
