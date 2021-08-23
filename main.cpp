@@ -99,7 +99,7 @@ int gamer() {
         {
             g = Gamer(it->getName(), it->getRegNo());
             // temporary output to confiem found
-            cout << "Found ..." << full_name << endl;
+            //cout << "Found ..." << full_name << endl;
         }
         if (it->getRegNo() > highRegNum)
         {
@@ -117,7 +117,7 @@ int gamer() {
         highRegNum++;
         Gamer g = Gamer(full_name, highRegNum);
         gamers.push_back(g);
-        cout << g.getName() << " you are a new gamer, your reg number is " << g.getRegNo() << endl;
+        cout << g.getName() << " you are a new gamer, your reg. no is: " << g.getRegNo() << endl;
     }
 
     // temporary to show we've loaded them properly.
@@ -125,7 +125,7 @@ int gamer() {
         list<Gamer>::iterator it;
         for (it = gamers.begin(); it != gamers.end(); it++)
         {
-            cout << it->getRegNo() << " ... " << it->getName() << endl;
+            cout << "Welcome " << it->getName() << ", reg no.: " << it->getRegNo() << endl;
         }
     }
     do {
@@ -500,11 +500,11 @@ int manager() {
     list<Manager>::iterator it;
     for (it = managers.begin(); it != managers.end(); it++)
     {
-        cout << it->getRegNo() << " ... " << it->getName() << endl;
+        //cout << it->getRegNo() << " ... " << it->getName() << endl;
         if (it->getName() == full_name)
         {
             m = Manager(it->getName(), it->getRegNo());
-            cout << "Found ... " << full_name << endl;
+            cout << "Welcome " << full_name << endl;
         }
         if (it->getRegNo() > highRegNum)
         {
