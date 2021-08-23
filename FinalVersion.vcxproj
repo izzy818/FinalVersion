@@ -23,7 +23,6 @@
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Manager.cpp" />
     <ClCompile Include="Person.cpp" />
-    <ClCompile Include="ReadWords.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Date.h" />

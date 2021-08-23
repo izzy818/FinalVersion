@@ -251,7 +251,7 @@ int gamer() {
                 }
                 if (word == answer)
                 {
-                    cout << "\n\nWell done, you have guessed the word: " << answer << endl << endl;
+                    cout << "\n\nWell done, you have guessed the word: " << answer << endl;
                     break;
                 }
                 if (correctGuess == false)
@@ -390,7 +390,7 @@ int gamer() {
             return 0;
         }
         else if (option == '4') {
-            cout << "Exiting" << endl << endl;
+            cout << "Exiting";
             return 0;
         }
         else {
