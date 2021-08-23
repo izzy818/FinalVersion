@@ -4,13 +4,13 @@
 // you may modify the code that I have supplied if you wish
 
 
-using namespace std;
-
 #include "ReadWords.h"
 #include <cctype>
 #include <cstdlib>
 #include <iostream>
 #include <set>
+
+using namespace std;
 
 string removePunct(string word)
 { // should return a copy of the word with all leading and trailing punctuation      
@@ -98,4 +98,7 @@ bool ReadWords::getWords()
 
 void ReadWords::close()
 { // you must write this
+  if (wordfile.is_open()) {
+    wordfile.close();
+  }
 }

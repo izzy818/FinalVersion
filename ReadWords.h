@@ -9,10 +9,10 @@
  * lower-case versions of words from that file.
  */
 
-using namespace std;
-
 #include <string>
 #include <fstream>
+
+using namespace std;
 
  class ReadWords
  {

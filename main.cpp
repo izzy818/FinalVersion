@@ -1,5 +1,6 @@
 #include "Gamer.h"
 #include "Manager.h"
+#include "ReadWords.h"
 #include <ctime>
 #include <fstream>
 #include <iostream>
@@ -7,39 +8,42 @@
 #include <map>
 #include <sstream>
 #include <string>
+
 using namespace std;
 
+list<Gamer> load_gamers()
+{
+  ifstream gamers_file;
+  gamers_file.open("gamers.txt");
 
-list<Gamer> load_gamers() {
-    ifstream gamers_file;
-    gamers_file.open("gamers.txt");
+  list<Gamer> gamers;
 
-    list<Gamer> gamers;
+  string line;
+  if (gamers_file.is_open())
+  {
+    while (getline(gamers_file, line))
+    {
 
-    string line;
-    if (gamers_file.is_open()) {
-        while (getline(gamers_file, line)) {
+      stringstream ss(line);
 
-            stringstream ss(line);
+      int regNo;
+      ss >> regNo;
 
-            int regNo;
-            ss >> regNo;
+      string first;
+      ss >> first;
 
-            string first;
-            ss >> first;
+      string second;
+      ss >> second;
 
-            string second;
-            ss >> second;
+      string full_name = first + " " + second;
 
-            string full_name = first + " " + second;
-
-            Gamer g = Gamer(full_name, regNo);
-            gamers.push_back(g);
-        }
-        gamers_file.close();
+      Gamer g = Gamer(full_name, regNo);
+      gamers.push_back(g);
     }
+    gamers_file.close();
+  }
 
-    return gamers;
+  return gamers;
 }
 
 list<Manager> load_managers() {
@@ -74,6 +78,12 @@ list<Manager> load_managers() {
     return managers;
 }
 
+int playgame() {
+  ReadWords("sample.txt");
+
+ 
+}
+
 int gamer() {
   
   // load gamers from file.
@@ -96,7 +106,7 @@ int gamer() {
     if (it->getName() == full_name)
     {
       g = Gamer(it->getName(), it->getRegNo());
-      // temporary output to confiem found
+      // temporary output to confirm found
       cout << "Found ..." << full_name << endl;
     }
     if (it->getRegNo() > highRegNum)
@@ -141,7 +151,8 @@ int gamer() {
       {
       case '1':
         // TODO:
-        break;
+        playgame();
+        gamer();
       case '2':
         // TODO:
         break;
