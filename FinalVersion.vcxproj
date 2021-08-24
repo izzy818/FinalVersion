@@ -23,6 +23,7 @@
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Manager.cpp" />
     <ClCompile Include="Person.cpp" />
+    <ClCompile Include="ReadWords.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Date.h" />
@@ -40,6 +41,7 @@
     <Text Include="Words.txt" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="gitignore" />
     <None Include="hangman" />
     <None Include="Makefile" />
   </ItemGroup>

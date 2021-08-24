@@ -3,14 +3,14 @@
 
 // you may modify the code that I have supplied if you wish
 
-
-using namespace std;
-
 #include "ReadWords.h"
 #include <cctype>
 #include <cstdlib>
 #include <iostream>
 #include <set>
+#include <algorithm>
+
+using namespace std;
 
 string removePunct(string word)
 { // should return a copy of the word with all leading and trailing punctuation      
@@ -19,7 +19,12 @@ string removePunct(string word)
   // note that a word could havce more than one leading/trailing punctuation symbols
   // you need to write this
 
-	//says use 'ispunct' defined in h file cctype
+	for (auto it = begin(word); ispunct(*it);) {
+		it = word.erase(it);
+	}
+	for (auto it = prev(end(word)); ispunct(*it); --it) {
+		it = word.erase(it);
+	}
 
 	return word;
 }
@@ -55,7 +60,9 @@ string ReadWords::getNextWord()
 
 	// need to check that word contains a letter, and if not return an empty string;
 	// also need to convert to lower case before returning
-
+	for_each(word.begin(), word.end(), [](char& c) {
+		c = ::tolower(c);
+		});
 	return word;
 }
 
@@ -66,16 +73,20 @@ bool ReadWords::isNextWord()
 
 bool ReadWords::getPhrases()
 { 
-
+	return 0;
 }
 bool ReadWords::getWords()
 {
+	int minLen = 6;
+	int maxLen = 10;
 	// Populate a set of all words
 	set <string> allwords;
 	while (isNextWord()) {
 		string word = getNextWord();
 		if (word != "") {
-			allwords.insert(word);
+			if (word.length() >= minLen && word.length() <= maxLen) {
+				allwords.insert(word);
+			}
 		}
 	}
 
@@ -95,5 +106,8 @@ bool ReadWords::getWords()
 }
 
 void ReadWords::close()
-{ // you must write this
+{ 
+	if (wordfile.is_open()) {
+		wordfile.close();
+	}
 }

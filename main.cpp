@@ -1,7 +1,7 @@
 #include "Gamer.h"
 #include "Manager.h"
 #include "Hangman.h"
-//#include "ReadWords.h"
+#include "ReadWords.h"
 #include <ctime>
 #include <fstream>
 #include <iostream>
@@ -77,6 +77,253 @@ list<Manager> load_managers() {
     return managers;
 }
 
+int game() {
+    //set variables for game
+    int guesses{ 6 }; //allowed guesses
+    char guess;
+    bool correctGuess = false;
+    string word; //word to guess
+    string wordList[99];
+    string wordListE[99];
+    string wordListM[99];
+    string wordListH[99];
+    char guessed[7]; //array of guesses
+    //select difficulty
+    //read from difficulty.txt
+    ifstream difficulty;
+    difficulty.open("diff.txt");
+
+    cout << "Please select a difficulty: " << endl;
+    cout << "1) Easy" << endl;
+    cout << "2) Medium" << endl;
+    cout << "3) Hard" << endl;
+
+    char diffMode;
+    cin >> diffMode;
+
+    guessed[0] = '\0';
+    for (int i = 1; i < 6; i++)
+    {
+        guessed[i] = '-';
+    }
+    guessed[6] = '\0';
+
+
+    //get random word
+    srand(time(NULL)); //for obtaining a random word from the array
+    ifstream randWord; //for reading in variable
+    randWord.open("Words.txt");
+
+    for (int i = 0; i < 99; i++)
+    {
+        randWord >> wordList[i]; //filling up array
+        //cout << wordList[i] << endl; //for testing the list
+    }
+    int randNum = rand() % 100; //returns random value between 0-99
+    word = wordList[randNum];
+
+    /*if (diffMode == '1') {
+        word = wordListE[randNum];
+    }
+    else if (diffMode == '2') {
+        word = wordListM[randNum];
+    }
+    else if (diffMode == '3') {
+        word = wordListH[randNum];
+    }
+    else {
+        cout << "Invalid option: " << diffMode;
+        return 0;
+    }*/
+
+    //cout << word << endl; //for testing the random word
+    randWord.close();
+
+    string answer(word.length(), '_');
+    //cout << answer << endl;
+
+    while (guesses >= 0)
+    {
+        //reset bool
+        correctGuess = false;
+
+        //show relevant info
+        cout << "\nWord to guess: ";
+        cout << answer << endl;
+        cout << "\nWord length: " << answer.length();
+        cout << "\nGuesses remaining: " << guesses;
+        if (guessed[0] == '\0')
+        {
+            cout << endl;
+        }
+        else
+        {
+            cout << "\nLetters guessed: " << guessed << endl;
+        }
+        cout << "\n\nGuess a letter: ";
+        cin >> guess;
+
+        //check matching letters
+        for (int i = 0; i < answer.length(); i++)
+        {
+            if (word[i] == guess)
+            {
+                answer[i] = guess;
+                correctGuess = true;
+            }
+        }
+        if (word == answer)
+        {
+            cout << "\n\nWell done, you have guessed the word: " << answer << endl << endl;
+            break;
+        }
+        if (correctGuess == false)
+        {
+            guesses--;
+            cout << guess << " is not a matching letter" << endl;
+        }
+        else
+        {
+            cout << guess << " is a matching letter" << endl;
+        }
+
+        switch (guesses)
+        {
+        case 6:
+        {
+            cout << "____" << endl;
+            cout << "|  |" << endl;
+            cout << "|" << endl;
+            cout << "|" << endl;
+            cout << "|" << endl;
+            cout << "|" << endl;
+            cout << "|______" << endl;
+
+            break;
+        }
+        case 5:
+        {
+            cout << "____" << endl;
+            cout << "|  |" << endl;
+            cout << "|  O" << endl;
+            cout << "|" << endl;
+            cout << "|" << endl;
+            cout << "|" << endl;
+            cout << "|______" << endl;
+
+            if (correctGuess == false)
+            {
+                guessed[0] = guess;
+            }
+
+            break;
+        }
+        case 4:
+        {
+            cout << "____" << endl;
+            cout << "|  |" << endl;
+            cout << "|  O" << endl;
+            cout << "|  |" << endl;
+            cout << "|" << endl;
+            cout << "|" << endl;
+            cout << "|______" << endl;
+
+            if (correctGuess == false)
+            {
+                guessed[1] = guess;
+            }
+
+            break;
+        }
+        case 3:
+        {
+            cout << "____" << endl;
+            cout << "|  |" << endl;
+            cout << "|  O" << endl;
+            cout << "| /|" << endl;
+            cout << "|" << endl;
+            cout << "|" << endl;
+            cout << "|______" << endl;
+
+            if (correctGuess == false)
+            {
+                guessed[2] = guess;
+            }
+
+            break;
+        }
+        case 2:
+        {
+            cout << "____" << endl;
+            cout << "|  |" << endl;
+            cout << "|  O" << endl;
+            cout << "| /|\\" << endl;
+            cout << "|" << endl;
+            cout << "|" << endl;
+            cout << "|______" << endl;
+
+            if (correctGuess == false)
+            {
+                guessed[3] = guess;
+            }
+
+            break;
+        }
+        case 1:
+        {
+            cout << "____" << endl;
+            cout << "|  |" << endl;
+            cout << "|  O" << endl;
+            cout << "| /|\\" << endl;
+            cout << "| / " << endl;
+            cout << "|" << endl;
+            cout << "|______" << endl;
+
+            if (correctGuess == false)
+            {
+                guessed[4] = guess;
+            }
+
+            break;
+        }
+        case 0:
+        {
+            cout << "____" << endl;
+            cout << "|  |" << endl;
+            cout << "|  O" << endl;
+            cout << "| /|\\" << endl;
+            cout << "| / \\" << endl;
+            cout << "|" << endl;
+            cout << "|______" << endl;
+            cout << "\nGame over!" << endl;
+            guesses = -1;
+            break;
+        }
+        default:
+            cout << "Error.";
+        }
+
+        /*if (diffMode == '1') {
+            cout << "You have scored " << guesses << " points.";
+        }
+        else if (diffMode == '2') {
+            cout << "You have scored " << guesses*2 << " points.";
+        }
+        else if (diffMode == '3') {
+            cout << "You have scored " << guesses * 3 << " points.";
+        }*/
+    }
+}
+
+int playgame(int difficulty) {
+    int d = difficulty;
+    ReadWords maingame("sample.text");
+    maingame.getWords();
+
+    maingame.close();
+    return 0;
+}
+
 int gamer() {
     // load gamers from file.
     list<Gamer> gamers = load_gamers();
@@ -94,12 +341,12 @@ int gamer() {
     list<Gamer>::iterator it;
     for (it = gamers.begin(); it != gamers.end(); it++)
     {
-        cout << it->getRegNo() << " ... " << it->getName() << endl;
+        //cout << it->getRegNo() << " ... " << it->getName() << endl;
         if (it->getName() == full_name)
         {
             g = Gamer(it->getName(), it->getRegNo());
             // temporary output to confiem found
-            //cout << "Found ..." << full_name << endl;
+            cout << "Found ..." << full_name << endl;
         }
         if (it->getRegNo() > highRegNum)
         {
@@ -117,7 +364,15 @@ int gamer() {
         highRegNum++;
         Gamer g = Gamer(full_name, highRegNum);
         gamers.push_back(g);
-        cout << g.getName() << " you are a new gamer, your reg. no is: " << g.getRegNo() << endl;
+        cout << g.getName() << " you are a new gamer, your reg. no is: " << g.getRegNo() << endl <<endl;
+        ofstream gamers_file;
+        gamers_file.open("gamers.txt", ios::app);
+        if (gamers_file.is_open()) {
+            gamers_file << endl << highRegNum << " " << full_name;
+            cout << "New gamer saved to file" << endl;
+            gamers_file.close();
+        }
+        else cout << "New gamer not saved!";
     }
 
     // temporary to show we've loaded them properly.
@@ -125,7 +380,7 @@ int gamer() {
         list<Gamer>::iterator it;
         for (it = gamers.begin(); it != gamers.end(); it++)
         {
-            cout << "Welcome " << it->getName() << ", reg no.: " << it->getRegNo() << endl;
+            //cout << "Welcome " << it->getName() << ", reg no.: " << it->getRegNo() << endl;
         }
     }
     do {
@@ -139,247 +394,8 @@ int gamer() {
         cin >> option;
 
         if (option == '1') {
-
-            //set variables for game
-            int guesses{ 6 }; //allowed guesses
-            char guess;
-            bool correctGuess = false;
-            string word; //word to guess
-            string wordList[99];
-            string wordListE[99];
-            string wordListM[99];
-            string wordListH[99];
-            char guessed[7]; //array of guesses
-            //select difficulty
-            //read from difficulty.txt
-            ifstream difficulty;
-            difficulty.open("diff.txt");
-
-            cout << "Please select a difficulty: " << endl;
-            cout << "1) Easy" << endl;
-            cout << "2) Medium" << endl;
-            cout << "3) Hard" << endl;
-
-            char diffMode;
-            cin >> diffMode;
-
-            /*if (diffMode = '1') {
-                string difficulty = "Easy";
-                //pull word length from file & store in wordLen ?
-            }
-            else if (diffMode = '2') {
-                string difficulty = "Medium";
-            }
-            else if (diffMode = '3') {
-                string difficulty = "Hard";
-            }
-            else {
-                cout << "Invalid option: " << diffMode;
-                return 0;
-            }*/
-
-            guessed[0] = '\0';
-            for (int i = 1; i < 6; i++)
-            {
-                guessed[i] = '-';
-            }
-            guessed[6] = '\0';
-
-
-            //get random word
-            srand(time(NULL)); //for obtaining a random word from the array
-            ifstream randWord; //for reading in variable
-            randWord.open("Words.txt");
-
-            for (int i = 0; i < 99; i++)
-            {
-                randWord >> wordList[i]; //filling up array
-                //cout << wordList[i] << endl; //for testing the list
-            }
-            int randNum = rand() % 100; //returns random value between 0-99
-            word = wordList[randNum];
-
-            /*if (diffMode == '1') {
-                word = wordListE[randNum];
-            }
-            else if (diffMode == '2') {
-                word = wordListM[randNum];
-            }
-            else if (diffMode == '3') {
-                word = wordListH[randNum];
-            }
-            else {
-                cout << "Invalid option: " << diffMode;
-                return 0;
-            }*/
-
-            //cout << word << endl; //for testing the random word
-            randWord.close();
-
-            string answer(word.length(), '_');
-            //cout << answer << endl;
-
-            while (guesses >= 0)
-            {
-                //reset bool
-                correctGuess = false;
-
-                //show relevant info
-                cout << "\nWord to guess: ";
-                cout << answer << endl;
-                cout << "\nWord length: " << answer.length();
-                cout << "\nGuesses remaining: " << guesses;
-                if (guessed[0] == '\0')
-                {
-                    cout << endl;
-                }
-                else
-                {
-                    cout << "\nLetters guessed: " << guessed << endl;
-                }
-                cout << "\n\nGuess a letter: ";
-                cin >> guess;
-
-                //check matching letters
-                for (int i = 0; i < answer.length(); i++)
-                {
-                    if (word[i] == guess)
-                    {
-                        answer[i] = guess;
-                        correctGuess = true;
-                    }
-                }
-                if (word == answer)
-                {
-                    cout << "\n\nWell done, you have guessed the word: " << answer << endl << endl;
-                    break;
-                }
-                if (correctGuess == false)
-                {
-                    guesses--;
-                    cout << guess << " is not a matching letter" << endl;
-                }
-                else
-                {
-                    cout << guess << " is a matching letter" << endl;
-                }
-
-                switch (guesses)
-                {
-                case 6:
-                {
-                    cout << "____" << endl;
-                    cout << "|  |" << endl;
-                    cout << "|" << endl;
-                    cout << "|" << endl;
-                    cout << "|" << endl;
-                    cout << "|" << endl;
-                    cout << "|______" << endl;
-
-                    break;
-                }
-                case 5:
-                {
-                    cout << "____" << endl;
-                    cout << "|  |" << endl;
-                    cout << "|  O" << endl;
-                    cout << "|" << endl;
-                    cout << "|" << endl;
-                    cout << "|" << endl;
-                    cout << "|______" << endl;
-
-                    if (correctGuess == false)
-                    {
-                        guessed[0] = guess;
-                    }
-
-                    break;
-                }
-                case 4:
-                {
-                    cout << "____" << endl;
-                    cout << "|  |" << endl;
-                    cout << "|  O" << endl;
-                    cout << "|  |" << endl;
-                    cout << "|" << endl;
-                    cout << "|" << endl;
-                    cout << "|______" << endl;
-
-                    if (correctGuess == false)
-                    {
-                        guessed[1] = guess;
-                    }
-
-                    break;
-                }
-                case 3:
-                {
-                    cout << "____" << endl;
-                    cout << "|  |" << endl;
-                    cout << "|  O" << endl;
-                    cout << "| /|" << endl;
-                    cout << "|" << endl;
-                    cout << "|" << endl;
-                    cout << "|______" << endl;
-
-                    if (correctGuess == false)
-                    {
-                        guessed[2] = guess;
-                    }
-
-                    break;
-                }
-                case 2:
-                {
-                    cout << "____" << endl;
-                    cout << "|  |" << endl;
-                    cout << "|  O" << endl;
-                    cout << "| /|\\" << endl;
-                    cout << "|" << endl;
-                    cout << "|" << endl;
-                    cout << "|______" << endl;
-
-                    if (correctGuess == false)
-                    {
-                        guessed[3] = guess;
-                    }
-
-                    break;
-                }
-                case 1:
-                {
-                    cout << "____" << endl;
-                    cout << "|  |" << endl;
-                    cout << "|  O" << endl;
-                    cout << "| /|\\" << endl;
-                    cout << "| / " << endl;
-                    cout << "|" << endl;
-                    cout << "|______" << endl;
-
-                    if (correctGuess == false)
-                    {
-                        guessed[4] = guess;
-                    }
-
-                    break;
-                }
-                case 0:
-                {
-                    cout << "____" << endl;
-                    cout << "|  |" << endl;
-                    cout << "|  O" << endl;
-                    cout << "| /|\\" << endl;
-                    cout << "| / \\" << endl;
-                    cout << "|" << endl;
-                    cout << "|______" << endl;
-                    cout << "\nGame over!" << endl;
-                    guesses = -1;
-                    break;
-                }
-                default:
-                    cout << "Error.";
-                }
-            }
+            game();
+            return 0;
         }
         else if (option == '2') {
             // statistics
@@ -390,7 +406,6 @@ int gamer() {
             return 0;
         }
         else if (option == '4') {
-            cout << "Exiting" << endl << endl;
             return 0;
         }
         else {
@@ -544,7 +559,7 @@ int manager() {
         // TODO:
         break;
     case '5':
-        break;
+        return -1;
     default:
         cout << "Invalid option: " << option << endl;
         return -1;
@@ -554,8 +569,7 @@ int manager() {
 }
 
 int main() {
-
-    cout << "   Welcome to Hangman!" << endl;
+    cout << "\n   Welcome to Hangman!" << endl;
     cout << "        ____" << endl;
     cout << "        |  |" << endl;
     cout << "        |  O" << endl;
@@ -574,11 +588,14 @@ int main() {
     switch (mode) {
     case '1':
         gamer();
-        main();
+        //main();
+        return 0;
     case '2':
         manager();
         main();
+        return 0;
     case '3':
+        
         return 0;
     default:
         cout << "Invalid option: " << mode << endl;
