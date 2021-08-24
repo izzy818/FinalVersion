@@ -78,16 +78,16 @@ list<Manager> load_managers() {
 }
 
 int game() {
-    //set variables for game
-    int guesses{ 6 }; //allowed guesses
+    
+    int guesses{ 6 }; 
     char guess;
     bool correctGuess = false;
-    string word; //word to guess
+    string word;
     string wordList[99];
     string wordListE[99];
     string wordListM[99];
     string wordListH[99];
-    char guessed[7]; //array of guesses
+    char guessed[7]; 
     //select difficulty
     //read from difficulty.txt
     ifstream difficulty;
@@ -110,16 +110,16 @@ int game() {
 
 
     //get random word
-    srand(time(NULL)); //for obtaining a random word from the array
-    ifstream randWord; //for reading in variable
+    srand(time(NULL)); 
+    ifstream randWord; 
     randWord.open("Words.txt");
 
     for (int i = 0; i < 99; i++)
     {
-        randWord >> wordList[i]; //filling up array
+        randWord >> wordList[i]; 
         //cout << wordList[i] << endl; //for testing the list
     }
-    int randNum = rand() % 100; //returns random value between 0-99
+    int randNum = rand() % 100; 
     word = wordList[randNum];
 
     /*if (diffMode == '1') {
@@ -147,7 +147,6 @@ int game() {
         //reset bool
         correctGuess = false;
 
-        //show relevant info
         cout << "\nWord to guess: ";
         cout << answer << endl;
         cout << "\nWord length: " << answer.length();
@@ -160,7 +159,7 @@ int game() {
         {
             cout << "\nLetters guessed: " << guessed << endl;
         }
-        cout << "\n\nGuess a letter: ";
+        cout << "\nGuess a letter: ";
         cin >> guess;
 
         //check matching letters
@@ -174,7 +173,16 @@ int game() {
         }
         if (word == answer)
         {
-            cout << "\n\nWell done, you have guessed the word: " << answer << endl << endl;
+            cout << "\n\nWell done, you have guessed the word: " << answer << endl;
+            if (diffMode == '1') {
+                cout << "You have scored " << guesses << " points." << endl << endl;
+            }
+            else if (diffMode == '2') {
+                cout << "You have scored " << guesses * 2 << " points." << endl << endl;
+            }
+            else if (diffMode == '3') {
+                cout << "You have scored " << guesses * 3 << " points." << endl << endl;
+            }
             break;
         }
         if (correctGuess == false)
