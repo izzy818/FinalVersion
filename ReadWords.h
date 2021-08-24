@@ -63,7 +63,8 @@ using namespace std;
       * private member array. The return type is bool so that true means the function was succesfully 
       * executed and false otherwise
       * */
-     bool getWords();
+      
+      bool getWords();
 
    private:
      ifstream wordfile;

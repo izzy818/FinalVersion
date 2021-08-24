@@ -9,6 +9,7 @@
 #include <cstdlib>
 #include <iostream>
 #include <set>
+#include <algorithm>
 
 using namespace std;
 
@@ -18,7 +19,12 @@ string removePunct(string word)
   // punctuation elsewhere in the word should not be removed
   // note that a word could havce more than one leading/trailing punctuation symbols
   // you need to write this
-
+  for (auto it = begin(word); ispunct(*it);) {
+    it = word.erase(it);
+  }
+  for (auto it = prev(end(word)); ispunct(*it); --it) {
+    it = word.erase(it);
+  }
   return word;
 }
 
@@ -50,8 +56,12 @@ string ReadWords::getNextWord()
   word = removePunct(word);
 
   // need to check that word contains a letter, and if not return an empty string;
+  
   // also need to convert to lower case before returning
-
+  for_each(word.begin(), word.end(), [](char & c) {
+        c = ::tolower(c);
+    });
+  cout << word << " ";
   return word;
 }
 
@@ -69,7 +79,9 @@ return 0;
 //}
 
 bool ReadWords::getWords()  //declare as bool in readwords.h
-{
+{ 
+  int minlen = 6;
+  int maxlen = 10;
   // Populate a set of all words
   set<string> allwords;
   while (isNextWord())
@@ -77,7 +89,9 @@ bool ReadWords::getWords()  //declare as bool in readwords.h
     string word = getNextWord();
     if (word != "")
     {
-      allwords.insert(word);
+      if (word.length() >= minlen && word.length() <= maxlen) {
+        allwords.insert(word);
+      }
     }
   }
 
@@ -85,15 +99,15 @@ bool ReadWords::getWords()  //declare as bool in readwords.h
   for (int i = 0; i < 10; i++)
   {
     int randNum = rand() % allwords.size();
-    auto it = std::begin(allwords);
-    std::advance(it, randNum);
+    auto it = begin(allwords);
+    advance(it, randNum);
     words[i] = *it;
   }
 
   // reset file position
   wordfile.seekg(0, wordfile.beg);
 
-  return true;
+  return 0;
 }
 
 void ReadWords::close()

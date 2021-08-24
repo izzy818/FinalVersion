@@ -78,10 +78,13 @@ list<Manager> load_managers() {
     return managers;
 }
 
-int playgame() {
+int playgame(int difficulty) {
+  int d = difficulty;
   ReadWords maingame("sample.txt");
+  maingame.getWords();
 
   maingame.close();
+  return 0;
 }
 
 int gamer() {
@@ -151,7 +154,7 @@ int gamer() {
       {
       case '1':
         // TODO:
-        playgame();
+        playgame(2);
         gamer();
       case '2':
         // TODO:
