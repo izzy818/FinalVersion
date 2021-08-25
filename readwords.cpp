@@ -77,8 +77,9 @@ bool ReadWords::isNextWord()
 
 bool ReadWords::getPhrases()
 { // you must write this
-  //ReadWords wibble("sample.txt");
-  //cout << wibble.wordfile << endl;
+  ReadWords wibble("sample.txt");
+  cout << wordfile << endl;
+  cout << nextword << endl;
   for (int i = 0; i < 10; i++)
   {
     cout << " word " << words[i] << endl;
@@ -105,7 +106,7 @@ bool ReadWords::getPhrases()
     // reset file position
     wordfile.seekg(0, wordfile.beg);
   }
-
+  wibble.close();
   return 0;
 }
 
@@ -156,7 +157,6 @@ bool ReadWords::getWords() //declare as bool in readwords.h
     }
     words_file.close();
   }
-  getPhrases();
   return true;
 }
 
