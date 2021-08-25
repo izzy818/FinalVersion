@@ -10,6 +10,7 @@
 #include <set>
 #include <algorithm>
 #include <string>
+#include <fstream>
 
 using namespace std;
 
@@ -77,19 +78,33 @@ bool ReadWords::isNextWord()
 
 bool ReadWords::getPhrases()
 { // you must write this
-  ReadWords wibble("sample.txt");
-  cout << wordfile << endl;
-  cout << nextword << endl;
+  
+  cout << "hello -------------------------------------------" << endl;
+
+ // reset file position
+  wordfile.seekg(0, wordfile.beg);
+  eoffound = false;
+  //ifstream phrase_file;
+  //phrase_file.open("sample.txt");
+
+  //cout << phrase_file << endl;
+  //cout << nextword << endl;
+    
+  string phrase;
+  bool found;
+
   for (int i = 0; i < 10; i++)
   {
-    cout << " word " << words[i] << endl;
-    string phrase;
-    bool found;
+    cout << "Word in array " << words[i] << endl;
     found = false;
-    while (isNextWord()){
+    if (isNextWord())
+    {
       string word = getNextWord();
-      if (word != ""){
-        
+      cout << word << "+";
+      if (word != "")
+      {
+        cout << word << "|";
+        /*
         phrase += word;
         if (word == words[i]){
           found = true;
@@ -101,12 +116,13 @@ bool ReadWords::getPhrases()
             break;
           }
         }
+        */
       }
     }
     // reset file position
     wordfile.seekg(0, wordfile.beg);
   }
-  wibble.close();
+  //wibble.close();
   return 0;
 }
 
@@ -157,7 +173,7 @@ bool ReadWords::getWords() //declare as bool in readwords.h
     }
     words_file.close();
   }
-  return true;
+  return 0;
 }
 
 void ReadWords::close()

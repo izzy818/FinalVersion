@@ -141,16 +141,7 @@ int gamer() {
       gamers_file.close();
     }
   }
-  /*
-    // temporary to show we've loaded them properly.
-    {
-      list<Gamer>::iterator it;
-      for (it = gamers.begin(); it != gamers.end(); it++)
-      {
-        cout << it->getRegNo() << " ... " << it->getName() << endl;
-      }
-    }
-  */
+
   do 
   {
       cout << "1) Play game" << endl;
