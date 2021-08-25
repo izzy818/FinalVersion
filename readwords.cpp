@@ -82,6 +82,7 @@ bool ReadWords::getPhrases()
   cout << "hello -------------------------------------------" << endl;
 
  // reset file position
+ wordfile.clear();
   wordfile.seekg(0, wordfile.beg);
   eoffound = false;
   //ifstream phrase_file;
@@ -92,35 +93,57 @@ bool ReadWords::getPhrases()
     
   string phrase;
   bool found;
+  
+  //re populate the words array
+  //file
+  //for (int i = 0; i < 10; i++)
+  //{
+  //}
 
   for (int i = 0; i < 10; i++)
   {
     cout << "Word in array " << words[i] << endl;
     found = false;
-    if (isNextWord())
+    phrase = "";
+    while (isNextWord())
     {
       string word = getNextWord();
-      cout << word << "+";
+      //cout << word << "+";
       if (word != "")
       {
-        cout << word << "|";
-        /*
-        phrase += word;
+        //cout << word << "|";
+        
+        
         if (word == words[i]){
           found = true;
+          cout << "Found  " << word << endl;
+          phrase += "__________";
+          phrase += " ";
+        } else {
+          phrase += word + " ";
         }
-        if (word == "."){
+
+        if (nextword.find(".")  != string::npos){
           if (found == true){
+            phrase += nextword;
             cout << phrase << " contains " << words[i] << endl;
             //phrases
+            phrase = "";
             break;
           }
+          string word = getNextWord();
+          phrase = "";
         }
-        */
+        
       }
+      //phrase = "";
     }
-    // reset file position
-    wordfile.seekg(0, wordfile.beg);
+      //reset file position
+      wordfile.clear();
+      wordfile.seekg(0, wordfile.beg);
+      eoffound = false;
+      phrase = "";
+    
   }
   //wibble.close();
   return 0;

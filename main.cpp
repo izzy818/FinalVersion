@@ -88,8 +88,12 @@ int playgame(int difficulty) {
   
   maingame.getWords();
   // print out 10 words selected
+
+  //ReadWords subgame("sample.txt");
   maingame.getPhrases();
   maingame.close();
+  //subgame.close();
+ 
   return 0;
 }
 
