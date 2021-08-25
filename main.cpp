@@ -11,6 +11,8 @@
 
 using namespace std;
 
+//string words[10];
+
 list<Gamer> load_gamers()
 {
   ifstream gamers_file;
@@ -79,10 +81,14 @@ list<Manager> load_managers() {
 }
 
 int playgame(int difficulty) {
+  // pass this to the function when worked out how!
   int d = difficulty;
+  
   ReadWords maingame("sample.txt");
+  
   maingame.getWords();
-
+  // print out 10 words selected
+  maingame.getPhrases();
   maingame.close();
   return 0;
 }
@@ -110,36 +116,41 @@ int gamer() {
     {
       g = Gamer(it->getName(), it->getRegNo());
       // temporary output to confirm found
-      cout << "Found ..." << full_name << endl;
+      cout << "Found ..." << it->getRegNo() << " " << full_name << endl;
+      break;
     }
     if (it->getRegNo() > highRegNum)
     {
       highRegNum = it->getRegNo();
     }
   }
-
-  //cout << "Highest reg num " << highRegNum << endl;
-  //cout << "got it " << g.getName() << " and reg no " << g.getRegNo() << endl;
   
   //if validation fails (regno = 0), create new gamer profile
-  if (g.getRegNo() == 0 )
+  if (g.getRegNo() == 0 && full_name != "")
   {
     //set new reg no
     highRegNum++;
     Gamer g =  Gamer(full_name, highRegNum);
     gamers.push_back(g);
     cout << g.getName() << " you are a new gamer, your reg number is " << g.getRegNo() << endl;
-  }
-
-  // temporary to show we've loaded them properly.
-  {
-    list<Gamer>::iterator it;
-    for (it = gamers.begin(); it != gamers.end(); it++)
-    {
-      cout << it->getRegNo() << " ... " << it->getName() << endl;
+    ofstream gamers_file;
+    gamers_file.open("gamers.txt", ios::app);
+    if (gamers_file.is_open()){
+      gamers_file << endl << highRegNum << " " << full_name;
+      cout << "New gamer saved to file" << endl;
+      gamers_file.close();
     }
   }
-
+  /*
+    // temporary to show we've loaded them properly.
+    {
+      list<Gamer>::iterator it;
+      for (it = gamers.begin(); it != gamers.end(); it++)
+      {
+        cout << it->getRegNo() << " ... " << it->getName() << endl;
+      }
+    }
+  */
   do 
   {
       cout << "1) Play game" << endl;
@@ -155,7 +166,7 @@ int gamer() {
       case '1':
         // TODO:
         playgame(2);
-        gamer();
+        //gamer();
       case '2':
         // TODO:
         break;
@@ -296,9 +307,11 @@ int main() {
   switch (mode) {
     case '1':
       return gamer();
+      return 0;
     case '2':
       manager();
       main();
+      return 0;
     case '3':
       return 1;
     default:
