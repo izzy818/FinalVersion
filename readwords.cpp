@@ -82,23 +82,12 @@ bool ReadWords::getPhrases()
   cout << "hello -------------------------------------------" << endl;
 
  // reset file position
- wordfile.clear();
+  wordfile.clear();
   wordfile.seekg(0, wordfile.beg);
   eoffound = false;
-  //ifstream phrase_file;
-  //phrase_file.open("sample.txt");
-
-  //cout << phrase_file << endl;
-  //cout << nextword << endl;
-    
+      
   string phrase;
   bool found;
-  
-  //re populate the words array
-  //file
-  //for (int i = 0; i < 10; i++)
-  //{
-  //}
 
   for (int i = 0; i < 10; i++)
   {
@@ -127,7 +116,7 @@ bool ReadWords::getPhrases()
           if (found == true){
             phrase += nextword;
             cout << phrase << " contains " << words[i] << endl;
-            //phrases
+            // add to phrases array
             phrase = "";
             break;
           }
