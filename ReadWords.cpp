@@ -9,36 +9,37 @@
 #include <iostream>
 #include <set>
 #include <algorithm>
+#include <string>
 
 using namespace std;
 
 string removePunct(string word)
-{ // should return a copy of the word with all leading and trailing punctuation      
+{ // should return a copy of the word with all leading and trailing punctuation
   // removed
   // punctuation elsewhere in the word should not be removed
   // note that a word could havce more than one leading/trailing punctuation symbols
   // you need to write this
-
-	for (auto it = begin(word); ispunct(*it);) {
-		it = word.erase(it);
-	}
-	for (auto it = prev(end(word)); ispunct(*it); --it) {
-		it = word.erase(it);
-	}
-
-	return word;
+    for (auto it = begin(word); ispunct(*it);)
+    {
+        it = word.erase(it);
+    }
+    for (auto it = prev(end(word)); ispunct(*it); --it)
+    {
+        it = word.erase(it);
+    }
+    return word;
 }
 
 ReadWords::ReadWords(const char* fname)
 {
-	wordfile.open(fname);//open file
-	if (!wordfile)
-	{
-		cout << "Failed to open " << fname << endl;
-		exit(1);
-	}
-	wordfile >> nextword;
-	eoffound = false;
+    wordfile.open(fname); //open file
+    if (!wordfile)
+    {
+        cout << "Failed to open " << fname << endl;
+        exit(1);
+    }
+    wordfile >> nextword;
+    eoffound = false;
 }
 
 string ReadWords::getNextWord()
@@ -50,64 +51,119 @@ string ReadWords::getNextWord()
 
   // incomplete
 
-	string word = nextword;
-	wordfile >> nextword;
+    string word = nextword;
+    wordfile >> nextword;
 
-	if (wordfile.eof())
-		eoffound = true;
+    if (wordfile.eof())
+        eoffound = true;
 
-	word = removePunct(word);
+    word = removePunct(word);
 
-	// need to check that word contains a letter, and if not return an empty string;
-	// also need to convert to lower case before returning
-	for_each(word.begin(), word.end(), [](char& c) {
-		c = ::tolower(c);
-		});
-	return word;
+    // need to check that word contains a letter, and if not return an empty string;
+
+    // also need to convert to lower case before returning
+
+    // this is a temp fix use for_each in final version
+    transform(word.begin(), word.end(), word.begin(), ::tolower);
+
+    //cout << word << " ";
+    return word;
 }
 
 bool ReadWords::isNextWord()
 {
-	return !eoffound;
+    return !eoffound;
 }
 
 bool ReadWords::getPhrases()
-{ 
-	return 0;
+{ // you must write this
+    ReadWords wibble("sample.txt");
+    //cout << wordfile << endl;
+    cout << nextword << endl;
+    for (int i = 0; i < 10; i++)
+    {
+        cout << " word " << words[i] << endl;
+        string phrase;
+        bool found;
+        found = false;
+        while (isNextWord()) {
+            string word = getNextWord();
+            if (word != "") {
+
+                phrase += word;
+                if (word == words[i]) {
+                    found = true;
+                }
+                if (word == ".") {
+                    if (found == true) {
+                        cout << phrase << " contains " << words[i] << endl;
+                        //phrases
+                        break;
+                    }
+                }
+            }
+        }
+        // reset file position
+        wordfile.seekg(0, wordfile.beg);
+    }
+    wibble.close();
+    return 0;
 }
-bool ReadWords::getWords()
+
+//void ReadWords::getWords()
+//{ // you must write this
+//}
+
+bool ReadWords::getWords() //declare as bool in readwords.h
 {
-	int minLen = 6;
-	int maxLen = 10;
-	// Populate a set of all words
-	set <string> allwords;
-	while (isNextWord()) {
-		string word = getNextWord();
-		if (word != "") {
-			if (word.length() >= minLen && word.length() <= maxLen) {
-				allwords.insert(word);
-			}
-		}
-	}
+    //set here as temporary measure
+    int minlen = 6;
+    int maxlen = 10;
 
+    // Populate a set of all words
+    set<string> allwords;
+    while (isNextWord())
+    {
+        string word = getNextWord();
+        if (word != "")
+        {
+            if (word.length() >= minlen && word.length() <= maxlen)
+            {
+                allwords.insert(word);
+            }
+        }
+    }
 
-	// select 10 words randomly
-	for (int i = 0; i < 10; i++) {
-		int randNum = rand() % allwords.size();
-		auto it = begin(allwords);
-		advance(it, randNum);
-		words[i] = *it;
-	}
+    // select 10 words randomly
+    for (int i = 0; i < 10; i++)
+    {
+        int randNum = rand() % allwords.size();
+        auto it = begin(allwords);
+        advance(it, randNum);
+        words[i] = *it;
+    }
 
-	// reset file position
-	wordfile.seekg(0, wordfile.beg);
+    // reset file position
+    wordfile.seekg(0, wordfile.beg);
 
-	return true;
+    // print out 10 words selected
+    ofstream words_file;
+    words_file.open("words_file.txt", ios::out);
+    if (words_file.is_open())
+    {
+        for (int i = 0; i < 10; i++) {
+            words_file << words[i] << endl;
+            cout << "New word " << words[i] << " saved to file" << endl;
+        }
+        words_file.close();
+    }
+    return true;
 }
 
 void ReadWords::close()
-{ 
-	if (wordfile.is_open()) {
-		wordfile.close();
-	}
+{ // you must write this
+    if (wordfile.is_open())
+    {
+        wordfile.close();
+    }
 }

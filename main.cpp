@@ -87,19 +87,12 @@ int game() {
     string wordListE[99];
     string wordListM[99];
     string wordListH[99];
+    int randNum(0);
+    char diffMode;
     char guessed[7]; 
-    //select difficulty
-    //read from difficulty.txt
+
     ifstream difficulty;
     difficulty.open("diff.txt");
-
-    cout << "Please select a difficulty: " << endl;
-    cout << "1) Easy" << endl;
-    cout << "2) Medium" << endl;
-    cout << "3) Hard" << endl;
-
-    char diffMode;
-    cin >> diffMode;
 
     guessed[0] = '\0';
     for (int i = 1; i < 6; i++)
@@ -107,7 +100,6 @@ int game() {
         guessed[i] = '-';
     }
     guessed[6] = '\0';
-
 
     //get random word
     srand(time(NULL)); 
@@ -119,8 +111,33 @@ int game() {
         randWord >> wordList[i]; 
         //cout << wordList[i] << endl; //for testing the list
     }
-    int randNum = rand() % 100; 
-    word = wordList[randNum];
+
+    cout << "Please select a difficulty: " << endl;
+    cout << "1) Easy" << endl;
+    cout << "2) Medium" << endl;
+    cout << "3) Hard" << endl;
+
+    cin >> diffMode;
+
+    if (diffMode == '1') {
+        randNum = rand() % 30;
+        word = wordList[randNum];
+    }
+    else if (diffMode == '2') {
+        int randNum = rand() % 29 + 31;
+        word = wordList[randNum];
+    }
+    else if (diffMode == '3') {
+        int randNum = (rand() % 10) + 61;
+        word = wordList[randNum];
+    }
+    else {
+        cout << "error";
+        int randNum = rand() % 71; 
+        word = wordList[randNum];
+    }
+    
+    //word = wordList[randNum];
 
     /*if (diffMode == '1') {
         word = wordListE[randNum];
@@ -161,6 +178,9 @@ int game() {
         }
         cout << "\nGuess a letter: ";
         cin >> guess;
+
+        int points;
+        points = diffMode * guesses;
 
         //check matching letters
         for (int i = 0; i < answer.length(); i++)
@@ -311,22 +331,19 @@ int game() {
             cout << "Error.";
         }
 
-        /*if (diffMode == '1') {
-            cout << "You have scored " << guesses << " points.";
-        }
-        else if (diffMode == '2') {
-            cout << "You have scored " << guesses*2 << " points.";
-        }
-        else if (diffMode == '3') {
-            cout << "You have scored " << guesses * 3 << " points.";
-        }*/
+
     }
 }
 
 int playgame(int difficulty) {
+
     int d = difficulty;
+
     ReadWords maingame("sample.text");
+
     maingame.getWords();
+    // print out 10 words selected
+    maingame.getPhrases();
 
     maingame.close();
     return 0;
@@ -354,7 +371,7 @@ int gamer() {
         {
             g = Gamer(it->getName(), it->getRegNo());
             // temporary output to confiem found
-            cout << "Found ..." << full_name << endl;
+            cout << "Welcome " << full_name << endl;
         }
         if (it->getRegNo() > highRegNum)
         {

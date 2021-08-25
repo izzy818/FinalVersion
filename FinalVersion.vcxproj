@@ -19,6 +19,7 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Gameplay.cpp" />
     <ClCompile Include="Gamer.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Manager.cpp" />
@@ -28,6 +29,7 @@
   <ItemGroup>
     <ClInclude Include="Date.h" />
     <ClInclude Include="encryption.h" />
+    <ClInclude Include="Gameplay.h" />
     <ClInclude Include="Gamer.h" />
     <ClInclude Include="Manager.h" />
     <ClInclude Include="Person.h" />
@@ -39,6 +41,7 @@
     <Text Include="managers.txt" />
     <Text Include="sample.txt" />
     <Text Include="Words.txt" />
+    <Text Include="words_file.txt" />
   </ItemGroup>
   <ItemGroup>
     <None Include="gitignore" />

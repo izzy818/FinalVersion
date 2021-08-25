@@ -30,6 +30,9 @@
     <ClCompile Include="ReadWords.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="Gameplay.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Gamer.h">
@@ -50,6 +53,9 @@
     <ClInclude Include="ReadWords.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="Gameplay.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Text Include="gamers.txt" />
@@ -57,6 +63,7 @@
     <Text Include="sample.txt" />
     <Text Include="diff.txt" />
     <Text Include="Words.txt" />
+    <Text Include="words_file.txt" />
   </ItemGroup>
   <ItemGroup>
     <None Include="hangman" />
